@@ -31,7 +31,7 @@ npm install
 ### 2. Configure Supabase (optional for local preview)
 
 1. Create a free project at [supabase.com](https://supabase.com).
-2. In your project's **SQL editor**, run the schema in [`supabase/schema.sql`](./supabase/schema.sql). It creates the `contact_messages` table and the proper RLS policies.
+2. In your project's **SQL editor**, run the schema in [`supabase/schema.sql`](./supabase/schema.sql). It creates the `contacts` table and the proper RLS policies.
 3. Copy `.env.example` to `.env` and fill in your project credentials:
 
    ```env
@@ -108,7 +108,7 @@ const PHONE = '447449705501' // international format, no '+' or spaces
 Located at [`supabase/schema.sql`](./supabase/schema.sql):
 
 ```sql
-create table public.contact_messages (
+create table public.contacts (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   email text not null,
@@ -116,12 +116,13 @@ create table public.contact_messages (
   created_at timestamptz not null default now()
 );
 
+-- + check constraints (length / email shape)
 -- + RLS policies that:
 --   • allow anonymous INSERT from the website (anon key)
 --   • allow only authenticated users to SELECT (you, in the dashboard)
 ```
 
-You can view submissions in **Supabase → Table Editor → contact_messages**.
+You can view submissions in **Supabase → Table Editor → contacts**.
 
 ---
 
