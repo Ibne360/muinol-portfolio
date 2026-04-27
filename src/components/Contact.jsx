@@ -61,59 +61,49 @@ export default function Contact() {
               Let's <span className="gold-text">build</span> something
               remarkable.
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-white/70">
+            <p className="mt-6 text-lg leading-relaxed text-fg/70">
               Have a project, idea or partnership in mind? Drop a message — I
               read every email personally and respond within 24 hours.
             </p>
 
             <div className="mt-10 space-y-4">
-              <a
-                href="mailto:kinetimart@gmail.com"
-                className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-gold-300/40"
-              >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/20 to-gold-600/10 text-gold-200 ring-1 ring-gold-300/20">
-                  <Mail size={20} />
-                </span>
-                <span>
-                  <span className="block text-xs uppercase tracking-widest text-white/50">
-                    Email
-                  </span>
-                  <span className="block font-medium text-white group-hover:text-gold-100">
-                    kinetimart@gmail.com
-                  </span>
-                </span>
-              </a>
-
-              <a
-                href="tel:+447449705501"
-                className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-gold-300/40"
-              >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/20 to-gold-600/10 text-gold-200 ring-1 ring-gold-300/20">
-                  <Phone size={20} />
-                </span>
-                <span>
-                  <span className="block text-xs uppercase tracking-widest text-white/50">
-                    Phone / WhatsApp
-                  </span>
-                  <span className="block font-medium text-white group-hover:text-gold-100">
-                    +44 7449 705501
-                  </span>
-                </span>
-              </a>
-
-              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/20 to-gold-600/10 text-gold-200 ring-1 ring-gold-300/20">
-                  <MapPin size={20} />
-                </span>
-                <span>
-                  <span className="block text-xs uppercase tracking-widest text-white/50">
-                    Based in
-                  </span>
-                  <span className="block font-medium text-white">
-                    United Kingdom · Working Globally
-                  </span>
-                </span>
-              </div>
+              {[
+                { icon: Mail, label: 'Email', value: 'kinetimart@gmail.com', href: 'mailto:kinetimart@gmail.com' },
+                { icon: Phone, label: 'Phone / WhatsApp', value: '+44 7449 705501', href: 'tel:+447449705501' },
+                { icon: MapPin, label: 'Based in', value: 'United Kingdom · Working Globally', href: null }
+              ].map((c, i) => {
+                const Inner = (
+                  <>
+                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/30 to-gold-600/15 text-gold-500 ring-1 ring-gold-400/30 dark:text-gold-200 dark:ring-gold-300/20">
+                      <c.icon size={20} />
+                    </span>
+                    <span>
+                      <span className="block text-xs uppercase tracking-widest text-fg/50">
+                        {c.label}
+                      </span>
+                      <span className="block font-medium text-fg group-hover:text-gold-500 dark:group-hover:text-gold-100">
+                        {c.value}
+                      </span>
+                    </span>
+                  </>
+                )
+                const cls = 'group flex items-center gap-4 rounded-2xl border border-fg/10 bg-fg/[0.03] p-5 transition hover:border-gold-300/40'
+                return (
+                  <motion.div
+                    key={c.label}
+                    initial={{ opacity: 0, x: -16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                  >
+                    {c.href ? (
+                      <a href={c.href} className={cls}>{Inner}</a>
+                    ) : (
+                      <div className={cls}>{Inner}</div>
+                    )}
+                  </motion.div>
+                )
+              })}
             </div>
           </motion.div>
 
@@ -127,7 +117,7 @@ export default function Contact() {
           >
             <form
               onSubmit={onSubmit}
-              className="gold-border relative rounded-3xl glass-strong p-7 sm:p-9 shadow-glass"
+              className="gold-border animated-border relative rounded-3xl glass-strong p-7 sm:p-9"
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field
@@ -148,7 +138,7 @@ export default function Contact() {
               </div>
 
               <div className="mt-5">
-                <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-white/60">
+                <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-fg/60">
                   Message
                 </label>
                 <textarea
@@ -157,7 +147,7 @@ export default function Contact() {
                   onChange={onChange}
                   rows={6}
                   placeholder="Tell me about your project, idea or goals..."
-                  className="w-full resize-none rounded-xl border border-white/10 bg-ink-900/60 px-4 py-3 text-[15px] text-white placeholder:text-white/35 outline-none transition focus:border-gold-300/60 focus:ring-2 focus:ring-gold-300/20"
+                  className="w-full resize-none rounded-xl border border-fg/10 bg-fg/[0.04] px-4 py-3 text-[15px] text-fg placeholder:text-fg/35 outline-none transition focus:border-gold-300/60 focus:bg-fg/[0.06] focus:ring-2 focus:ring-gold-300/20"
                 />
               </div>
 
@@ -179,7 +169,7 @@ export default function Contact() {
                 </button>
 
                 {!isSupabaseConfigured && (
-                  <p className="text-xs text-white/45">
+                  <p className="text-xs text-fg/45">
                     Tip: add Supabase env vars to enable form storage.
                   </p>
                 )}
@@ -206,7 +196,7 @@ export default function Contact() {
 function Field({ label, name, type = 'text', value, onChange, placeholder }) {
   return (
     <div>
-      <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-white/60">
+      <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-fg/60">
         {label}
       </label>
       <input
@@ -215,7 +205,7 @@ function Field({ label, name, type = 'text', value, onChange, placeholder }) {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-ink-900/60 px-4 py-3 text-[15px] text-white placeholder:text-white/35 outline-none transition focus:border-gold-300/60 focus:ring-2 focus:ring-gold-300/20"
+        className="w-full rounded-xl border border-fg/10 bg-fg/[0.04] px-4 py-3 text-[15px] text-fg placeholder:text-fg/35 outline-none transition focus:border-gold-300/60 focus:bg-fg/[0.06] focus:ring-2 focus:ring-gold-300/20"
       />
     </div>
   )

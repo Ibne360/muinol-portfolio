@@ -49,19 +49,26 @@ export default function About() {
               A builder at the <span className="gold-text">intersection</span> of
               code, AI and commerce.
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-white/70">
-              I'm Muinol Islam — founder of <span className="text-white">KinetiMart</span>
+            <p className="mt-6 text-lg leading-relaxed text-fg/70">
+              I'm Muinol Islam — founder of <span className="font-semibold text-fg">KinetiMart</span>
               {' '}and a multi-disciplinary technologist. For years I've helped
               founders and businesses ship intelligent products and grow online
               with AI-powered systems and global e-commerce.
             </p>
 
             <ul className="mt-8 space-y-3">
-              {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-white/80">
-                  <CheckCircle2 size={20} className="mt-0.5 flex-none text-gold-300" />
+              {bullets.map((b, i) => (
+                <motion.li
+                  key={b}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                  className="flex items-start gap-3 text-fg/80"
+                >
+                  <CheckCircle2 size={20} className="mt-0.5 flex-none text-gold-400" />
                   <span>{b}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
 
@@ -80,20 +87,24 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="card group"
+                className="card animated-border group"
               >
-                <div className="mb-5 inline-grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/20 to-gold-600/10 text-gold-300 ring-1 ring-gold-300/20 transition group-hover:from-gold-200/40 group-hover:to-gold-600/20 group-hover:text-gold-200">
+                <motion.div
+                  whileHover={{ rotate: -6, scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                  className="mb-5 inline-grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/30 to-gold-600/15 text-gold-500 ring-1 ring-gold-400/30 dark:text-gold-300 dark:ring-gold-300/20"
+                >
                   <h.icon size={22} />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-white">
+                </motion.div>
+                <h3 className="font-display text-xl font-semibold text-fg">
                   {h.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/65">
+                <p className="mt-2 text-sm leading-relaxed text-fg/65">
                   {h.desc}
                 </p>
 
                 {/* corner accent */}
-                <span className="pointer-events-none absolute right-5 top-5 h-1.5 w-1.5 rounded-full bg-gold-300/60" />
+                <span className="pointer-events-none absolute right-5 top-5 h-1.5 w-1.5 rounded-full bg-gold-400/70 animate-pulse-slow" />
               </motion.div>
             ))}
           </div>

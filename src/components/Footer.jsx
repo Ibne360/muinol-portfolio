@@ -33,7 +33,7 @@ const navCols = [
 
 export default function Footer() {
   return (
-    <footer className="relative mt-12 border-t border-white/5 bg-ink-950/60">
+    <footer className="relative mt-12 border-t border-fg/5 bg-canvas-2/40">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
 
       <div className="container-x py-16">
@@ -48,9 +48,9 @@ export default function Footer() {
                 Muinol <span className="gold-text">Islam</span>
               </span>
             </a>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/65">
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-fg/65">
               Software developer, AI specialist and entrepreneur. Founder of{' '}
-              <span className="text-white">KinetiMart</span>. Building smart
+              <span className="font-semibold text-fg">KinetiMart</span>. Building smart
               solutions for ambitious businesses worldwide.
             </p>
 
@@ -62,7 +62,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03] text-white/70 transition hover:border-gold-300/40 hover:text-gold-200"
+                  className="grid h-10 w-10 place-items-center rounded-xl border border-fg/10 bg-fg/[0.04] text-fg/70 transition hover:-translate-y-0.5 hover:border-gold-300/50 hover:text-gold-500 dark:hover:text-gold-200"
                 >
                   <s.icon size={16} />
                 </a>
@@ -73,7 +73,7 @@ export default function Footer() {
           {/* Link columns */}
           {navCols.map((col) => (
             <div key={col.title} className="lg:col-span-3">
-              <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-200">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-500 dark:text-gold-200">
                 {col.title}
               </h4>
               <ul className="mt-5 space-y-3">
@@ -81,7 +81,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="text-sm text-white/65 transition hover:text-white"
+                      className="text-sm text-fg/65 transition hover:text-fg hover:translate-x-1 inline-block"
                     >
                       {l.label}
                     </a>
@@ -95,12 +95,12 @@ export default function Footer() {
           <div className="lg:col-span-1" />
         </div>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-white/45">
+        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-fg/5 pt-6 sm:flex-row sm:items-center">
+          <p className="text-xs text-fg/45">
             © {new Date().getFullYear()} Muinol Islam · KinetiMart. All rights
             reserved.
           </p>
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-fg/40">
             Designed &amp; built with <span className="gold-text">care</span> ·
             Powered by React, Tailwind &amp; Supabase
           </p>

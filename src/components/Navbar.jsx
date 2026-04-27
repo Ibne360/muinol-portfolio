@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import ThemeToggle from './ThemeToggle.jsx'
 
 const links = [
   { href: '#home', label: 'Home' },
@@ -28,7 +29,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'border-b border-white/5 bg-ink-950/70 backdrop-blur-xl'
+          ? 'border-b border-fg/5 bg-canvas/70 backdrop-blur-xl'
           : 'bg-transparent'
       }`}
     >
@@ -48,28 +49,32 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="relative px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:text-white"
+              className="group relative px-4 py-2 text-sm font-medium text-fg/70 transition-colors hover:text-fg"
             >
               {l.label}
-              <span className="absolute inset-x-4 -bottom-0.5 h-px scale-x-0 bg-gradient-to-r from-transparent via-gold-300 to-transparent transition-transform duration-300 group-hover:scale-x-100" />
+              <span className="absolute inset-x-4 -bottom-0.5 h-px scale-x-0 bg-gradient-to-r from-transparent via-gold-400 to-transparent transition-transform duration-300 group-hover:scale-x-100" />
             </a>
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <a href="#contact" className="btn-primary text-xs">
             Hire Me
           </a>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/5 text-white md:hidden"
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Mobile actions */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="grid h-11 w-11 place-items-center rounded-xl border border-fg/10 bg-fg/[0.04] text-fg"
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -80,7 +85,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden border-t border-white/5 bg-ink-950/95 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-t border-fg/5 bg-canvas/95 backdrop-blur-xl md:hidden"
           >
             <div className="container-x flex flex-col gap-1 py-5">
               {links.map((l) => (
@@ -88,7 +93,7 @@ export default function Navbar() {
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-white/80 transition hover:bg-white/5 hover:text-white"
+                  className="rounded-lg px-3 py-3 text-base font-medium text-fg/80 transition hover:bg-fg/5 hover:text-fg"
                 >
                   {l.label}
                 </a>
