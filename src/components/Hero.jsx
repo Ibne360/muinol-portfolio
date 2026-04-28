@@ -1,15 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Upload, Mail } from 'lucide-react'
+import { ArrowRight, Sparkles, Mail } from 'lucide-react'
 import Particles from './Particles.jsx'
 import AnimatedCounter from './AnimatedCounter.jsx'
 
 const headline = 'Building Smart Solutions with AI'
+const portraitSrc = '/images/portrait.jpg'
 
 export default function Hero() {
-  const fileRef = useRef(null)
   const sectionRef = useRef(null)
-  const [portrait, setPortrait] = useState('/images/portrait.jpg')
 
   // Mouse-tracked spotlight on the hero section
   useEffect(() => {
@@ -26,13 +25,7 @@ export default function Hero() {
     return () => el.removeEventListener('mousemove', onMove)
   }, [])
 
-  const handleUpload = (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const url = URL.createObjectURL(file)
-    setPortrait(url)
-  }
-
+  // Safety net: if portrait.jpg ever fails to load, fall back to the SVG silhouette.
   const handleImgError = (e) => {
     if (!e.target.dataset.fallback) {
       e.target.dataset.fallback = '1'
@@ -216,8 +209,7 @@ export default function Hero() {
             {/* Frame */}
             <div className="gold-border relative h-full overflow-hidden rounded-[2rem] glass-strong">
               <motion.img
-                key={portrait}
-                src={portrait}
+                src={portraitSrc}
                 alt="Muinol Islam — portrait"
                 onError={handleImgError}
                 initial={{ scale: 1.08, opacity: 0 }}
@@ -231,22 +223,6 @@ export default function Hero() {
 
               {/* Subtle vignette */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-
-              {/* Upload control */}
-              <button
-                onClick={() => fileRef.current?.click()}
-                className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/55 px-4 py-2 text-xs font-medium text-white/95 backdrop-blur-md transition hover:border-gold-300/60 hover:text-white"
-                title="Upload your photo"
-              >
-                <Upload size={14} /> Upload Photo
-              </button>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                onChange={handleUpload}
-                className="hidden"
-              />
             </div>
 
             {/* Floating badge — AI Expert */}
