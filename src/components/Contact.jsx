@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Mail,
   Phone,
@@ -45,8 +45,13 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative py-24 sm:py-32">
-      <div className="container-x">
+    <section id="contact" className="relative overflow-hidden py-24 sm:py-32">
+      {/* Floating decorative aurora orbs */}
+      <div className="pointer-events-none absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl animate-aurora-1" />
+      <div className="pointer-events-none absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-fuchsia-500/8 blur-3xl animate-aurora-2" />
+      <div className="pointer-events-none absolute right-1/4 top-0 h-64 w-64 rounded-full bg-cyan-500/6 blur-3xl animate-aurora-3" />
+
+      <div className="container-x relative">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           {/* Left: heading + info */}
           <motion.div
@@ -68,26 +73,31 @@ export default function Contact() {
 
             <div className="mt-10 space-y-4">
               {[
-                { icon: Mail, label: 'Email', value: 'kinetimart@gmail.com', href: 'mailto:kinetimart@gmail.com' },
-                { icon: Phone, label: 'Phone / WhatsApp', value: '+44 7449 705501', href: 'tel:+447449705501' },
-                { icon: MapPin, label: 'Based in', value: 'United Kingdom · Working Globally', href: null }
+                { icon: Mail, label: 'Email', value: 'kinetimart@gmail.com', href: 'mailto:kinetimart@gmail.com', accent: 'from-gold-300/30 to-amber-600/15' },
+                { icon: Phone, label: 'Phone / WhatsApp', value: '+44 7449 705501', href: 'tel:+447449705501', accent: 'from-emerald-400/30 to-teal-600/15' },
+                { icon: MapPin, label: 'Based in', value: 'United Kingdom · Working Globally', href: null, accent: 'from-fuchsia-400/30 to-violet-600/15' }
               ].map((c, i) => {
                 const Inner = (
                   <>
-                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/30 to-gold-600/15 text-gold-500 ring-1 ring-gold-400/30 dark:text-gold-200 dark:ring-gold-300/20">
+                    {/* Mesh ambient layer */}
+                    <span className="pointer-events-none absolute inset-0 mesh-card rounded-2xl opacity-25 transition-opacity duration-500 group-hover:opacity-80" />
+                    {/* Per-card accent corner glow */}
+                    <span className={`pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${c.accent} opacity-50 blur-2xl transition-opacity duration-500 group-hover:opacity-100`} />
+
+                    <span className="relative grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-200/40 to-gold-600/20 text-gold-500 shadow-gold ring-1 ring-gold-400/30 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6 dark:text-gold-200 dark:ring-gold-300/20">
                       <c.icon size={20} />
                     </span>
-                    <span>
+                    <span className="relative">
                       <span className="block text-xs uppercase tracking-widest text-fg/50">
                         {c.label}
                       </span>
-                      <span className="block font-medium text-fg group-hover:text-gold-500 dark:group-hover:text-gold-100">
+                      <span className="block font-medium text-fg transition-colors group-hover:text-gold-500 dark:group-hover:text-gold-100">
                         {c.value}
                       </span>
                     </span>
                   </>
                 )
-                const cls = 'group flex items-center gap-4 rounded-2xl border border-fg/10 bg-fg/[0.03] p-5 transition hover:border-gold-300/40'
+                const cls = 'group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-fg/10 bg-fg/[0.03] p-5 backdrop-blur-sm transition-all duration-500 hover:border-gold-300/50 hover:-translate-y-1 hover:shadow-[0_15px_40px_-15px_rgba(245,220,122,0.4)]'
                 return (
                   <motion.div
                     key={c.label}
@@ -121,7 +131,7 @@ export default function Contact() {
             >
               {/* Soft mesh accent layer behind the form fields */}
               <span className="pointer-events-none absolute inset-0 mesh-card opacity-40" />
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="relative grid gap-5 sm:grid-cols-2">
                 <Field
                   label="Your name"
                   name="name"
@@ -139,7 +149,7 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="mt-5">
+              <div className="relative mt-5">
                 <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-fg/60">
                   Message
                 </label>
@@ -149,26 +159,57 @@ export default function Contact() {
                   onChange={onChange}
                   rows={6}
                   placeholder="Tell me about your project, idea or goals..."
-                  className="w-full resize-none rounded-xl border border-fg/10 bg-fg/[0.04] px-4 py-3 text-[15px] text-fg placeholder:text-fg/35 outline-none transition focus:border-gold-300/60 focus:bg-fg/[0.06] focus:ring-2 focus:ring-gold-300/20"
+                  className="w-full resize-none rounded-xl border border-fg/10 bg-fg/[0.04] px-4 py-3 text-[15px] text-fg placeholder:text-fg/35 outline-none transition-all duration-300 focus:border-transparent focus:bg-fg/[0.07] focus:ring-2 focus:ring-gold-300/40 focus:shadow-[0_0_30px_-5px_rgba(245,220,122,0.4)]"
                 />
               </div>
 
-              <div className="mt-6 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <button
+              <div className="relative mt-6 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <motion.button
                   type="submit"
                   disabled={status.state === 'loading'}
-                  className="btn-primary disabled:opacity-70"
+                  whileHover={{ scale: status.state === 'loading' ? 1 : 1.03 }}
+                  whileTap={{ scale: status.state === 'loading' ? 1 : 0.97 }}
+                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-gold-200 via-gold-300 to-gold-400 px-7 py-3 text-sm font-bold text-ink-950 shadow-lg shadow-gold-500/40 transition disabled:opacity-70"
                 >
-                  {status.state === 'loading' ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" /> Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} /> Send Message
-                    </>
-                  )}
-                </button>
+                  {/* Animated shine sweep */}
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <AnimatePresence mode="wait" initial={false}>
+                    {status.state === 'loading' ? (
+                      <motion.span
+                        key="loading"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative inline-flex items-center gap-2"
+                      >
+                        <Loader2 size={16} className="animate-spin" /> Sending...
+                      </motion.span>
+                    ) : status.state === 'success' ? (
+                      <motion.span
+                        key="success"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative inline-flex items-center gap-2"
+                      >
+                        <CheckCircle2 size={16} /> Message sent!
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="idle"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative inline-flex items-center gap-2"
+                      >
+                        <Send size={16} /> Send Message
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
 
                 {!isSupabaseConfigured && (
                   <p className="text-xs text-fg/45">
@@ -177,16 +218,33 @@ export default function Contact() {
                 )}
               </div>
 
-              {status.state === 'success' && (
-                <p className="mt-5 inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">
-                  <CheckCircle2 size={16} /> {status.msg}
-                </p>
-              )}
-              {status.state === 'error' && (
-                <p className="mt-5 inline-flex items-center gap-2 rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">
-                  <AlertCircle size={16} /> {status.msg}
-                </p>
-              )}
+              {/* Animated status toasts */}
+              <AnimatePresence>
+                {status.state === 'success' && (
+                  <motion.p
+                    key="toast-success"
+                    initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                    transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+                    className="relative mt-5 inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200 backdrop-blur-md"
+                  >
+                    <CheckCircle2 size={16} /> {status.msg}
+                  </motion.p>
+                )}
+                {status.state === 'error' && (
+                  <motion.p
+                    key="toast-error"
+                    initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                    transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+                    className="relative mt-5 inline-flex items-center gap-2 rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-200 backdrop-blur-md"
+                  >
+                    <AlertCircle size={16} /> {status.msg}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </motion.div>
         </div>
@@ -207,7 +265,7 @@ function Field({ label, name, type = 'text', value, onChange, placeholder }) {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-fg/10 bg-fg/[0.04] px-4 py-3 text-[15px] text-fg placeholder:text-fg/35 outline-none transition focus:border-gold-300/60 focus:bg-fg/[0.06] focus:ring-2 focus:ring-gold-300/20"
+        className="w-full rounded-xl border border-fg/10 bg-fg/[0.04] px-4 py-3 text-[15px] text-fg placeholder:text-fg/35 outline-none transition-all duration-300 focus:border-transparent focus:bg-fg/[0.07] focus:ring-2 focus:ring-gold-300/40 focus:shadow-[0_0_30px_-5px_rgba(245,220,122,0.4)]"
       />
     </div>
   )

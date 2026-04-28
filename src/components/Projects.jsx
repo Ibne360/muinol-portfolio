@@ -111,7 +111,7 @@ const projects = [
 // Phone-shaped preview frame used for app-kind projects.
 function PhoneMock({ title }) {
   return (
-    <div className="absolute inset-x-16 top-4 bottom-0 rounded-t-[1.75rem] border border-white/20 bg-ink-950/80 p-1.5 backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-2">
+    <div className="absolute inset-x-16 top-4 bottom-0 rounded-t-[1.75rem] border border-white/20 bg-ink-950/80 p-1.5 shadow-2xl backdrop-blur-md transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.04] group-hover:shadow-[0_25px_60px_-15px_rgba(168,85,247,0.6)]">
       {/* Notch / status bar */}
       <div className="mx-auto mb-1 mt-0.5 h-1.5 w-12 rounded-full bg-white/25" />
 
@@ -165,7 +165,7 @@ function PhoneMock({ title }) {
 // Desktop-window preview frame used for web-kind projects (existing look).
 function WindowMock() {
   return (
-    <div className="absolute inset-x-6 bottom-0 top-8 rounded-t-xl border border-white/15 bg-ink-900/70 p-3 backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-2">
+    <div className="absolute inset-x-6 bottom-0 top-8 rounded-t-xl border border-white/15 bg-ink-900/70 p-3 shadow-xl backdrop-blur-md transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.03] group-hover:shadow-[0_25px_50px_-15px_rgba(245,220,122,0.4)]">
       <div className="flex items-center gap-1.5">
         <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
         <span className="h-2.5 w-2.5 rounded-full bg-amber-300/70" />
@@ -187,8 +187,12 @@ function WindowMock() {
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative py-24 sm:py-32">
-      <div className="container-x">
+    <section id="projects" className="relative overflow-hidden py-24 sm:py-32">
+      {/* Decorative aurora blobs */}
+      <div className="pointer-events-none absolute right-1/3 top-10 h-72 w-72 rounded-full bg-fuchsia-500/10 blur-3xl animate-aurora-1" />
+      <div className="pointer-events-none absolute -left-20 bottom-1/3 h-80 w-80 rounded-full bg-cyan-500/8 blur-3xl animate-aurora-3" />
+
+      <div className="container-x relative">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
             <span className="eyebrow">Projects</span>
@@ -209,24 +213,29 @@ export default function Projects() {
           {projects.map((p, i) => (
             <motion.div
               key={p.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 36, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: i * 0.07 }}
+              transition={{ duration: 0.65, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6 }}
               style={{ perspective: 1200 }}
             >
               <TiltCard
                 intensity={5}
                 className={`group relative overflow-hidden rounded-2xl border backdrop-blur-md transition-all duration-500 ${
                   p.featured
-                    ? 'holo-border bg-fg/[0.04] shadow-[0_0_70px_-15px_rgba(245,220,122,0.55)] hover:shadow-[0_0_90px_-10px_rgba(168,85,247,0.5)]'
-                    : 'border-fg/10 bg-fg/[0.03] hover:border-gold-300/40'
+                    ? 'holo-border bg-fg/[0.04] shadow-[0_0_70px_-15px_rgba(245,220,122,0.55)] hover:shadow-[0_0_90px_-10px_rgba(168,85,247,0.55)]'
+                    : 'border-fg/10 bg-fg/[0.03] hover:border-gold-300/50 hover:shadow-[0_25px_50px_-20px_rgba(245,220,122,0.35)]'
                 }`}
               >
-                {/* Featured cards get a rich mesh-gradient ambient layer behind everything */}
-                {p.featured && (
-                  <span className="pointer-events-none absolute inset-0 mesh-card opacity-60 transition-opacity duration-700 group-hover:opacity-100" />
-                )}
+                {/* Mesh ambient layer — richer for featured, subtle for others */}
+                <span
+                  className={`pointer-events-none absolute inset-0 mesh-card transition-opacity duration-700 ${
+                    p.featured
+                      ? 'opacity-60 group-hover:opacity-100'
+                      : 'opacity-20 group-hover:opacity-70'
+                  }`}
+                />
 
                 {/* Featured ribbon */}
                 {p.featured && (
@@ -234,6 +243,9 @@ export default function Projects() {
                     <Star size={11} fill="currentColor" /> Featured
                   </div>
                 )}
+
+                {/* Card-wide shine sweep on hover (over the whole card) */}
+                <div className="pointer-events-none absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-white/8 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
 
                 {/* Visual */}
                 <div className="relative h-52 overflow-hidden">
@@ -246,55 +258,65 @@ export default function Projects() {
                   <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
 
                   {/* Hover overlay with dynamic links */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-3 bg-ink-950/70 opacity-0 backdrop-blur-sm transition-opacity duration-500 group-hover:opacity-100">
+                  <div className="absolute inset-0 flex items-center justify-center gap-3 bg-ink-950/75 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:opacity-100">
                     {p.links.map((link, idx) => {
                       const Icon = link.icon
                       const isPrimary = idx === 0
                       const isExternal =
                         link.href && link.href !== '#' && /^https?:/.test(link.href)
                       return (
-                        <a
+                        <motion.a
                           key={link.label}
                           href={link.href}
                           target={isExternal ? '_blank' : undefined}
                           rel={isExternal ? 'noopener noreferrer' : undefined}
+                          initial={false}
+                          whileHover={{ scale: 1.06, y: -2 }}
+                          whileTap={{ scale: 0.96 }}
                           className={
                             isPrimary
-                              ? 'inline-flex items-center gap-2 rounded-full bg-gold-300 px-4 py-2 text-xs font-semibold text-ink-950 transition hover:bg-gold-200'
-                              : 'inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:border-white/40'
+                              ? 'group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-gold-200 to-gold-400 px-4 py-2 text-xs font-bold text-ink-950 shadow-lg shadow-gold-500/40 transition'
+                              : 'group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/25 bg-white/8 px-4 py-2 text-xs font-bold text-white backdrop-blur-md transition hover:border-white/50 hover:bg-white/12'
                           }
                         >
-                          <Icon size={14} /> {link.label}
-                        </a>
+                          {/* Button shine sweep */}
+                          <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover/btn:translate-x-full" />
+                          <Icon size={14} className="relative" />{' '}
+                          <span className="relative">{link.label}</span>
+                        </motion.a>
                       )
                     })}
                   </div>
                 </div>
 
                 {/* Body */}
-                <div className="p-6">
+                <div className="relative z-10 p-6">
                   <div className="flex items-center justify-between">
                     <span className="text-xs uppercase tracking-widest text-gold-500 dark:text-gold-200/80">
                       {p.category}
                     </span>
-                    <span className="font-display text-sm text-fg/20">
+                    <span className="font-display text-sm text-fg/20 transition-colors duration-500 group-hover:text-gold-400/60">
                       {p.featured ? '★' : `0${i + 1}`}
                     </span>
                   </div>
-                  <h3 className="mt-2 font-display text-xl font-semibold text-fg">
+                  <h3 className="mt-2 font-display text-xl font-semibold text-fg transition-colors duration-300 group-hover:text-gold-300">
                     {p.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-fg/65">
                     {p.desc}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {p.tags.map((t) => (
-                      <span
+                    {p.tags.map((t, ti) => (
+                      <motion.span
                         key={t}
-                        className="rounded-full border border-fg/10 bg-fg/[0.04] px-2.5 py-0.5 text-[11px] font-medium text-fg/70"
+                        initial={{ opacity: 0, y: 6 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 + i * 0.05 + ti * 0.04 }}
+                        className="rounded-full border border-fg/10 bg-fg/[0.05] px-2.5 py-0.5 text-[11px] font-medium text-fg/70 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-300/40 hover:bg-gold-300/10 hover:text-gold-300"
                       >
                         {t}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>

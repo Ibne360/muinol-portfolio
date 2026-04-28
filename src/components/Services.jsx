@@ -84,43 +84,60 @@ export default function Services() {
                 />
 
                 <motion.div
-                  whileHover={{ rotate: -8, scale: 1.06 }}
+                  whileHover={{ rotate: -8, scale: 1.08 }}
                   transition={{ type: 'spring', stiffness: 280, damping: 16 }}
                   className="relative z-10 mb-6 inline-grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-gold-200/40 to-gold-600/20 text-gold-500 shadow-gold ring-1 ring-gold-400/30 dark:text-gold-200 dark:ring-gold-300/20"
                 >
-                  <s.icon size={26} />
+                  {/* Spinning conic ring on hover */}
+                  <span
+                    className="pointer-events-none absolute -inset-1.5 rounded-[18px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    style={{
+                      background:
+                        'conic-gradient(from 0deg, transparent 0%, rgba(245,220,122,0.7) 20%, transparent 50%, rgba(168,85,247,0.55) 75%, transparent 100%)',
+                      animation: 'spin 4s linear infinite',
+                      WebkitMaskImage:
+                        'radial-gradient(circle, transparent 62%, black 64%)',
+                      maskImage:
+                        'radial-gradient(circle, transparent 62%, black 64%)'
+                    }}
+                  />
+                  <s.icon size={26} className="relative" />
                 </motion.div>
 
-                <h3 className="font-display text-2xl font-semibold text-fg">
+                <h3 className="relative z-10 font-display text-2xl font-semibold text-fg">
                   {s.title}
                 </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-fg/65">
+                <p className="relative z-10 mt-3 text-[15px] leading-relaxed text-fg/65">
                   {s.desc}
                 </p>
 
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div className="relative z-10 mt-5 flex flex-wrap gap-2">
                   {s.tags.map((t) => (
                     <span
                       key={t}
-                      className="rounded-full border border-fg/10 bg-fg/[0.04] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-fg/70"
+                      className="rounded-full border border-fg/10 bg-fg/[0.05] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-fg/70 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-300/40 hover:bg-gold-300/10 hover:text-gold-300"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-7 flex items-center justify-between">
+                <div className="relative z-10 mt-7 flex items-center justify-between">
                   <a
                     href="#contact"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-gold-500 transition hover:text-gold-400 dark:text-gold-200 dark:hover:text-gold-100"
+                    className="group/link relative inline-flex items-center gap-1.5 text-sm font-semibold text-gold-500 transition hover:text-gold-400 dark:text-gold-200 dark:hover:text-gold-100"
                   >
-                    Start a project
+                    <span className="relative">
+                      Start a project
+                      {/* Animated underline that draws from left */}
+                      <span className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gradient-to-r from-gold-300 via-fuchsia-400 to-cyan-400 transition-transform duration-500 group-hover:scale-x-100" />
+                    </span>
                     <ArrowUpRight
                       size={16}
-                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:rotate-12"
                     />
                   </a>
-                  <span className="font-display text-xl text-fg/15">
+                  <span className="font-display text-2xl font-bold text-fg/15 transition-all duration-500 group-hover:text-transparent group-hover:[background-image:linear-gradient(135deg,rgba(245,220,122,0.6),rgba(168,85,247,0.6))] group-hover:[background-clip:text] group-hover:[-webkit-background-clip:text]">
                     0{i + 1}
                   </span>
                 </div>

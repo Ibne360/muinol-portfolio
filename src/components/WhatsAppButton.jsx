@@ -5,40 +5,97 @@ const MESSAGE = encodeURIComponent(
   "Hi Muinol, I'd like to discuss a project with you."
 )
 
+// Clean, official-style WhatsApp glyph
+const WhatsAppGlyph = ({ size = 30 }) => (
+  <svg
+    viewBox="0 0 32 32"
+    width={size}
+    height={size}
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M16.001 5.333c-5.891 0-10.667 4.776-10.667 10.667 0 1.876.49 3.696 1.418 5.302L5.333 26.667l5.495-1.398a10.625 10.625 0 0 0 5.173 1.331h.004c5.886 0 10.661-4.776 10.661-10.667 0-2.85-1.108-5.531-3.123-7.546a10.604 10.604 0 0 0-7.542-3.054zm0 19.467h-.003a8.85 8.85 0 0 1-4.508-1.234l-.323-.193-3.34.85.892-3.255-.21-.336a8.821 8.821 0 0 1-1.36-4.713c0-4.886 3.978-8.864 8.857-8.864 2.367 0 4.591.923 6.262 2.6a8.804 8.804 0 0 1 2.594 6.27c0 4.882-3.97 8.875-8.861 8.875zm4.864-6.643c-.267-.133-1.578-.778-1.823-.866-.244-.089-.422-.133-.6.133-.178.267-.689.866-.844 1.044-.155.178-.311.2-.578.067-.267-.133-1.125-.414-2.144-1.319-.792-.706-1.328-1.578-1.483-1.844-.155-.267-.017-.411.117-.544.12-.12.267-.311.4-.467.133-.155.178-.267.267-.444.089-.178.044-.333-.022-.467-.067-.133-.6-1.444-.822-1.978-.215-.518-.435-.448-.6-.456l-.511-.009c-.178 0-.467.067-.711.333-.244.267-.933.911-.933 2.222 0 1.311.956 2.578 1.089 2.756.133.178 1.881 2.872 4.554 4.025.637.275 1.133.439 1.521.563.639.203 1.221.174 1.681.106.513-.077 1.578-.644 1.8-1.267.222-.622.222-1.156.155-1.267-.067-.111-.244-.178-.511-.311z" />
+  </svg>
+)
+
 export default function WhatsAppButton() {
   const href = `https://wa.me/${PHONE}?text=${MESSAGE}`
 
   return (
-    <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.8, duration: 0.5, ease: 'easeOut' }}
-      className="group fixed bottom-6 right-6 z-40 grid h-14 w-14 place-items-center rounded-full text-white shadow-[0_15px_40px_-10px_rgba(37,211,102,0.55)] transition-transform hover:-translate-y-0.5"
-      style={{
-        background:
-          'linear-gradient(135deg, #25D366 0%, #128C7E 100%)'
-      }}
+    <motion.div
+      initial={{ opacity: 0, y: 80, scale: 0.5 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay: 0.8, type: 'spring', stiffness: 220, damping: 18 }}
+      className="fixed bottom-6 right-6 z-40"
     >
-      {/* Pulse ring */}
-      <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-emerald-400/30" />
-
-      <svg
-        viewBox="0 0 24 24"
-        width="26"
-        height="26"
-        fill="currentColor"
-        aria-hidden="true"
+      <motion.a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        className="group relative grid h-16 w-16 place-items-center"
       >
-        <path d="M19.11 17.21c-.27-.14-1.62-.8-1.87-.89-.25-.09-.43-.13-.6.14-.18.27-.69.89-.85 1.07-.16.18-.31.2-.58.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.41.12-.55.12-.12.27-.31.41-.47.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.6-1.45-.83-1.99-.22-.52-.44-.45-.6-.46l-.51-.01c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.98 2.65 1.12 2.83.14.18 1.93 2.95 4.68 4.13.65.28 1.16.45 1.56.58.66.21 1.25.18 1.72.11.52-.08 1.62-.66 1.85-1.3.23-.64.23-1.18.16-1.3-.07-.13-.25-.21-.52-.34zM12.04 2C6.55 2 2.1 6.45 2.1 11.94c0 1.92.5 3.79 1.45 5.44L2 22l4.74-1.51a9.94 9.94 0 0 0 5.3 1.49h.01c5.49 0 9.94-4.46 9.94-9.94 0-2.66-1.04-5.16-2.92-7.04A9.86 9.86 0 0 0 12.04 2zm0 18.05h-.01a8.07 8.07 0 0 1-4.12-1.13l-.3-.18-2.81.9.94-2.74-.19-.31a8.06 8.06 0 0 1-1.24-4.31c0-4.46 3.63-8.09 8.09-8.09 2.16 0 4.19.84 5.72 2.37a8.04 8.04 0 0 1 2.36 5.73c0 4.46-3.63 8.07-8.05 8.07z" />
-      </svg>
+        {/* Triple expanding pulse rings (staggered) */}
+        <span
+          className="pointer-events-none absolute inset-0 rounded-full bg-emerald-400/40"
+          style={{ animation: 'ping 2.4s cubic-bezier(0,0,0.2,1) infinite' }}
+        />
+        <span
+          className="pointer-events-none absolute inset-0 rounded-full bg-emerald-400/30"
+          style={{
+            animation: 'ping 2.4s cubic-bezier(0,0,0.2,1) infinite',
+            animationDelay: '0.8s'
+          }}
+        />
+        <span
+          className="pointer-events-none absolute inset-0 rounded-full bg-emerald-400/20"
+          style={{
+            animation: 'ping 2.4s cubic-bezier(0,0,0.2,1) infinite',
+            animationDelay: '1.6s'
+          }}
+        />
 
-      <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-ink-900/90 px-3 py-1.5 text-xs font-medium text-white/90 opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
-        Chat on WhatsApp
-      </span>
-    </motion.a>
+        {/* Soft outer glow halo (breathes) */}
+        <span className="pointer-events-none absolute -inset-2 rounded-full bg-gradient-to-br from-emerald-300/70 via-emerald-500/50 to-teal-700/60 opacity-70 blur-xl animate-pulse-glow" />
+
+        {/* Button face */}
+        <span
+          className="relative grid h-full w-full place-items-center rounded-full text-white shadow-[0_15px_45px_-10px_rgba(37,211,102,0.7)] ring-1 ring-white/25 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6 group-hover:shadow-[0_20px_60px_-10px_rgba(37,211,102,0.9)]"
+          style={{
+            background:
+              'radial-gradient(circle at 30% 25%, #34d970 0%, #25D366 35%, #128C7E 75%, #075E54 100%)'
+          }}
+        >
+          <WhatsAppGlyph size={30} />
+
+          {/* Notification dot */}
+          <span className="absolute -right-0.5 -top-0.5 grid h-3.5 w-3.5 place-items-center">
+            <span className="absolute inset-0 rounded-full bg-rose-500 animate-ping" />
+            <span className="relative h-3.5 w-3.5 rounded-full bg-gradient-to-br from-rose-400 to-rose-600 ring-2 ring-canvas" />
+          </span>
+
+          {/* Subtle glossy top highlight */}
+          <span className="pointer-events-none absolute inset-x-2 top-1.5 h-3 rounded-full bg-white/20 blur-sm" />
+        </span>
+
+        {/* Premium tooltip with status + arrow */}
+        <span className="pointer-events-none absolute right-full top-1/2 mr-4 -translate-y-1/2 whitespace-nowrap rounded-2xl bg-ink-950/95 px-4 py-2.5 text-xs shadow-2xl ring-1 ring-white/10 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:-translate-x-1 group-hover:opacity-100">
+          <span className="flex items-center gap-1.5 font-semibold text-emerald-300">
+            <span className="relative grid h-1.5 w-1.5 place-items-center">
+              <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
+              <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            Online — Chat now
+          </span>
+          <span className="mt-0.5 block text-[11px] font-medium text-white/65">
+            Replies within 24 hours
+          </span>
+          {/* Arrow */}
+          <span className="absolute right-0 top-1/2 h-0 w-0 -translate-y-1/2 translate-x-full border-y-[6px] border-l-[7px] border-y-transparent border-l-ink-950/95" />
+        </span>
+      </motion.a>
+    </motion.div>
   )
 }
