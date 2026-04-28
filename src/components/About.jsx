@@ -46,7 +46,7 @@ export default function About() {
           >
             <span className="eyebrow">About</span>
             <h2 className="section-title mt-5">
-              A builder at the <span className="gold-text">intersection</span> of
+              A builder at the <span className="gradient-flow-text">intersection</span> of
               code, AI and commerce.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-fg/70">

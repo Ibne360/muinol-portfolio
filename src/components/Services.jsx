@@ -52,7 +52,7 @@ export default function Services() {
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow">Services</span>
           <h2 className="section-title mt-5">
-            What I <span className="gold-text">deliver</span>.
+            What I <span className="gradient-flow-text">deliver</span>.
           </h2>
           <p className="mt-5 text-lg text-fg/70">
             A full-stack offering across software, AI and global e-commerce —
@@ -70,8 +70,11 @@ export default function Services() {
               transition={{ duration: 0.6, delay: i * 0.07 }}
               style={{ perspective: 1000 }}
             >
-              <TiltCard className="card animated-border group flex flex-col" intensity={6}>
-                {/* spotlight follows mouse via TiltCard's --mx/--my */}
+              <TiltCard className="card animated-border group relative flex flex-col overflow-hidden" intensity={6}>
+                {/* Mesh-gradient ambient layer (opacity rises on hover) */}
+                <span className="pointer-events-none absolute inset-0 mesh-card rounded-2xl opacity-40 transition-opacity duration-700 group-hover:opacity-90" />
+
+                {/* Spotlight follows mouse via TiltCard's --mx/--my */}
                 <span
                   className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
@@ -83,7 +86,7 @@ export default function Services() {
                 <motion.div
                   whileHover={{ rotate: -8, scale: 1.06 }}
                   transition={{ type: 'spring', stiffness: 280, damping: 16 }}
-                  className="mb-6 inline-grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-gold-200/30 to-gold-600/15 text-gold-500 ring-1 ring-gold-400/30 dark:text-gold-200 dark:ring-gold-300/20"
+                  className="relative z-10 mb-6 inline-grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-gold-200/40 to-gold-600/20 text-gold-500 shadow-gold ring-1 ring-gold-400/30 dark:text-gold-200 dark:ring-gold-300/20"
                 >
                   <s.icon size={26} />
                 </motion.div>

@@ -58,7 +58,7 @@ export default function Contact() {
           >
             <span className="eyebrow">Contact</span>
             <h2 className="section-title mt-5">
-              Let's <span className="gold-text">build</span> something
+              Let's <span className="gradient-flow-text">build</span> something
               remarkable.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-fg/70">
@@ -117,8 +117,10 @@ export default function Contact() {
           >
             <form
               onSubmit={onSubmit}
-              className="gold-border animated-border relative rounded-3xl glass-strong p-7 sm:p-9"
+              className="holo-border relative overflow-hidden rounded-3xl glass-ultra p-7 sm:p-9"
             >
+              {/* Soft mesh accent layer behind the form fields */}
+              <span className="pointer-events-none absolute inset-0 mesh-card opacity-40" />
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field
                   label="Your name"

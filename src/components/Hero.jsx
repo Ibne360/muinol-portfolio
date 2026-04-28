@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles, Mail } from 'lucide-react'
 import Particles from './Particles.jsx'
 import AnimatedCounter from './AnimatedCounter.jsx'
+import OrbitingChips from './OrbitingChips.jsx'
 
 const headline = 'Building Smart Solutions with AI'
 const portraitSrc = '/images/portrait.jpg'
@@ -45,16 +46,19 @@ export default function Hero() {
       {/* Decorative grid */}
       <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-60" />
 
-      {/* Animated blob orbs */}
-      <div className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-gold-500/15 blur-[120px] animate-blob" />
+      {/* Section-local extra blobs that ride on top of the global aurora */}
+      <div className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-gold-500/20 blur-[120px] animate-blob" />
       <div
-        className="pointer-events-none absolute -right-40 top-40 -z-10 h-[28rem] w-[28rem] rounded-full bg-indigo-500/15 blur-[140px] animate-blob"
+        className="pointer-events-none absolute -right-40 top-40 -z-10 h-[28rem] w-[28rem] rounded-full bg-fuchsia-500/15 blur-[140px] animate-blob"
         style={{ animationDelay: '4s' }}
       />
       <div
-        className="pointer-events-none absolute left-1/2 bottom-0 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-[120px] animate-blob"
+        className="pointer-events-none absolute left-1/2 bottom-0 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/12 blur-[120px] animate-blob"
         style={{ animationDelay: '8s' }}
       />
+
+      {/* Diagonal animated beam light across the entire hero */}
+      <div className="beam-light absolute inset-0 -z-10" />
 
       {/* Particles */}
       <Particles count={26} className="-z-10" />
@@ -78,34 +82,43 @@ export default function Hero() {
             Software · AI · Entrepreneurship
           </motion.span>
 
-          {/* Word-by-word animated headline */}
-          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+          {/* Word-by-word animated headline — bigger and more dramatic */}
+          <h1 className="mt-7 font-display text-[2.85rem] font-bold leading-[0.98] tracking-tight sm:text-6xl lg:text-[5.5rem] xl:text-[6rem]">
             {words.map((w, i) => {
-              const isAccent = w === 'Smart' || w === 'Solutions'
+              const isFlow = w === 'Smart' || w === 'Solutions'
+              const isGold = w === 'Building'
               const isAI = w === 'AI'
               return (
                 <motion.span
                   key={`${w}-${i}`}
-                  initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+                  initial={{ opacity: 0, y: 40, filter: 'blur(14px)' }}
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   transition={{
-                    duration: 0.7,
-                    delay: 0.1 + i * 0.08,
-                    ease: 'easeOut'
+                    duration: 0.8,
+                    delay: 0.1 + i * 0.09,
+                    ease: [0.16, 1, 0.3, 1]
                   }}
-                  className={`mr-3 inline-block ${
-                    isAccent ? 'gold-text' : ''
+                  className={`mr-4 inline-block ${
+                    isFlow ? 'gradient-flow-text' : isGold ? 'gold-text' : ''
                   } ${isAI ? 'relative' : ''}`}
                 >
                   {w}
                   {isAI && (
-                    <motion.span
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.8, delay: 1, ease: 'easeOut' }}
-                      style={{ transformOrigin: 'left' }}
-                      className="absolute -bottom-2 left-0 h-1 w-full rounded-full bg-gradient-to-r from-gold-300 via-gold-500 to-transparent"
-                    />
+                    <>
+                      <motion.span
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 0.9, delay: 1.1, ease: 'easeOut' }}
+                        style={{ transformOrigin: 'left' }}
+                        className="absolute -bottom-2 left-0 h-1.5 w-full rounded-full bg-gradient-to-r from-gold-300 via-fuchsia-400 to-transparent"
+                      />
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 1.4 }}
+                        className="absolute -right-6 -top-6 h-3 w-3 rounded-full bg-gold-300 animate-pulse-glow"
+                      />
+                    </>
                   )}
                 </motion.span>
               )
@@ -193,6 +206,9 @@ export default function Hero() {
           className="relative z-10 mx-auto w-full max-w-md lg:col-span-5"
         >
           <div className="relative aspect-square">
+            {/* Diagonal animated beam-light streak passing across the portrait area */}
+            <div className="beam-light absolute -inset-10 rounded-[3rem]" />
+
             {/* Rotating conic gold ring (outermost) */}
             <div className="absolute -inset-6 animate-spin-slow opacity-80">
               <div className="h-full w-full rounded-[2.5rem] bg-conic-gold blur-md" />
@@ -203,11 +219,11 @@ export default function Hero() {
               <div className="h-full w-full rounded-[2.25rem] bg-conic-gold" />
             </div>
 
-            {/* Pulsing glow halo */}
-            <div className="pointer-events-none absolute -inset-2 rounded-[2rem] bg-gradient-to-br from-gold-200/40 via-gold-500/20 to-transparent blur-2xl animate-pulse-slow" />
+            {/* Pulsing glow halo (now using pulse-glow filter) */}
+            <div className="pointer-events-none absolute -inset-4 rounded-[2.25rem] bg-gradient-to-br from-gold-200/50 via-fuchsia-400/20 to-cyan-400/20 blur-2xl animate-pulse-slow" />
 
             {/* Frame */}
-            <div className="gold-border relative h-full overflow-hidden rounded-[2rem] glass-strong">
+            <div className="holo-border relative h-full overflow-hidden rounded-[2rem] glass-strong">
               <motion.img
                 src={portraitSrc}
                 alt="Muinol Islam — portrait"
@@ -225,35 +241,17 @@ export default function Hero() {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
             </div>
 
-            {/* Floating badge — AI Expert */}
-            <motion.div
-              animate={{ y: [0, -10, 0], rotate: [-1, 1, -1] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -left-6 top-10 hidden rounded-2xl glass-strong p-4 sm:block"
-            >
-              <div className="flex items-center gap-3">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-                  className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-gold-200 to-gold-600 text-ink-950"
-                >
-                  <Sparkles size={18} />
-                </motion.div>
-                <div>
-                  <div className="text-sm font-semibold text-fg">AI Expert</div>
-                  <div className="text-xs text-fg/60">Automations & Tools</div>
-                </div>
-              </div>
-            </motion.div>
+            {/* Orbiting tech chips around the portrait (lg+) */}
+            <OrbitingChips />
 
-            {/* Floating badge — KinetiMart */}
+            {/* Floating KinetiMart founder badge — stays since it's identity branding */}
             <motion.div
-              animate={{ y: [0, 12, 0], rotate: [1, -1, 1] }}
+              animate={{ y: [0, 10, 0], rotate: [1, -1, 1] }}
               transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -right-6 bottom-12 hidden rounded-2xl glass-strong p-4 sm:block"
+              className="absolute -bottom-6 left-1/2 hidden -translate-x-1/2 rounded-2xl glass-ultra p-3 sm:flex lg:hidden"
             >
               <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-gold-200 to-gold-600 font-display text-base font-bold text-ink-950">
+                <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-gold-200 to-gold-600 font-display text-sm font-bold text-ink-950">
                   KM
                 </div>
                 <div>

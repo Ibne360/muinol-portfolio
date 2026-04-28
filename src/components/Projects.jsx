@@ -193,7 +193,7 @@ export default function Projects() {
           <div className="max-w-2xl">
             <span className="eyebrow">Projects</span>
             <h2 className="section-title mt-5">
-              Selected <span className="gold-text">work</span>.
+              Selected <span className="gradient-flow-text">work</span>.
             </h2>
             <p className="mt-5 text-lg text-fg/70">
               A snapshot of products, AI tools and businesses I've built and
@@ -219,13 +219,18 @@ export default function Projects() {
                 intensity={5}
                 className={`group relative overflow-hidden rounded-2xl border backdrop-blur-md transition-all duration-500 ${
                   p.featured
-                    ? 'border-gold-300/40 bg-fg/[0.04] shadow-[0_0_60px_-15px_rgba(245,220,122,0.45)] hover:border-gold-300/70'
+                    ? 'holo-border bg-fg/[0.04] shadow-[0_0_70px_-15px_rgba(245,220,122,0.55)] hover:shadow-[0_0_90px_-10px_rgba(168,85,247,0.5)]'
                     : 'border-fg/10 bg-fg/[0.03] hover:border-gold-300/40'
                 }`}
               >
+                {/* Featured cards get a rich mesh-gradient ambient layer behind everything */}
+                {p.featured && (
+                  <span className="pointer-events-none absolute inset-0 mesh-card opacity-60 transition-opacity duration-700 group-hover:opacity-100" />
+                )}
+
                 {/* Featured ribbon */}
                 {p.featured && (
-                  <div className="absolute left-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-gold-200 to-gold-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-ink-950 shadow-lg">
+                  <div className="absolute left-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-gold-200 to-gold-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-ink-950 shadow-lg animate-pulse-glow">
                     <Star size={11} fill="currentColor" /> Featured
                   </div>
                 )}

@@ -141,6 +141,132 @@ body {
     background-clip: text;
   }
 
+  /* Premium flowing rainbow gradient (used on accent words in section titles). */
+  .gradient-flow-text {
+    background: linear-gradient(
+      120deg,
+      #f5dc7a 0%,
+      #ec4899 18%,
+      #a855f7 38%,
+      #6366f1 58%,
+      #06b6d4 78%,
+      #f5dc7a 100%
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 14s ease infinite;
+  }
+  .dark .gradient-flow-text {
+    background: linear-gradient(
+      120deg,
+      #fde68a 0%,
+      #f0abfc 18%,
+      #c4b5fd 38%,
+      #93c5fd 58%,
+      #67e8f9 78%,
+      #fde68a 100%
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* Mesh-gradient card surface — used on featured / hero cards. */
+  .mesh-card {
+    background:
+      radial-gradient(at 20% 0%, rgba(245, 220, 122, 0.18), transparent 50%),
+      radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.16), transparent 50%),
+      radial-gradient(at 0% 100%, rgba(6, 182, 212, 0.14), transparent 50%),
+      radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.14), transparent 50%);
+  }
+  .dark .mesh-card {
+    background:
+      radial-gradient(at 20% 0%, rgba(245, 220, 122, 0.22), transparent 55%),
+      radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.22), transparent 55%),
+      radial-gradient(at 0% 100%, rgba(6, 182, 212, 0.18), transparent 55%),
+      radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.18), transparent 55%);
+  }
+
+  /* Diagonal animated light beam — used in Hero / dividers. */
+  .beam-light {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .beam-light::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 30%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(245, 220, 122, 0.25) 50%,
+      transparent 100%
+    );
+    animation: beam 14s ease-in-out infinite;
+  }
+  .dark .beam-light::after {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(245, 220, 122, 0.18) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Holographic shifting border (richer than animated-border). */
+  .holo-border {
+    position: relative;
+  }
+  .holo-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      transparent 0deg,
+      rgba(245, 220, 122, 0.9) 60deg,
+      rgba(168, 85, 247, 0.85) 140deg,
+      rgba(6, 182, 212, 0.85) 220deg,
+      rgba(236, 72, 153, 0.85) 300deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.55;
+    animation: borderSpin 10s linear infinite;
+  }
+  .holo-border:hover::before {
+    opacity: 1;
+    animation: borderSpin 4s linear infinite;
+  }
+
+  /* Premium glass with shadow + extra blur — used on Hero CTAs / featured cards. */
+  .glass-ultra {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+      var(--glass-shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
   .gold-border {
     position: relative;
   }

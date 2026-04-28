@@ -8,22 +8,27 @@ import Footer from './components/Footer.jsx'
 import WhatsAppButton from './components/WhatsAppButton.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import Marquee from './components/Marquee.jsx'
+import AuroraBackground from './components/AuroraBackground.jsx'
+import SectionDivider from './components/SectionDivider.jsx'
 
 export default function App() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-canvas text-fg">
-      {/* Ambient background layers */}
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-radial-gold opacity-80 dark:opacity-90" />
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-noise opacity-[0.03] mix-blend-multiply dark:mix-blend-overlay dark:opacity-[0.05]" />
+      {/* Animated aurora mesh + premium noise grain (full-page, fixed, -z-10) */}
+      <AuroraBackground />
 
       <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
         <Marquee />
+        <SectionDivider />
         <About />
+        <SectionDivider />
         <Services />
+        <SectionDivider />
         <Projects />
+        <SectionDivider />
         <Contact />
       </main>
       <Footer />
